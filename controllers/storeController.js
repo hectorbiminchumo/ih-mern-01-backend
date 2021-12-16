@@ -84,3 +84,57 @@ exports.readOne = async (req, res) => {
 
 
 }
+
+exports.edit = async (req, res) => {
+
+    const {id} = req.params
+
+    const {
+        domicilio,
+        telefono
+    } = req.body
+
+    try{
+        const updatedStore = await Store.findByIdAndUpdate(id,
+            
+            {
+                domicilio,
+                telefono
+            },
+            {new: true}
+            
+            )
+            res.json({
+                msg: "Store actualizado con exito",
+                data: updatedStore
+            })
+    } catch (error){
+
+        res.status(500).json({
+            msg: "Hubo un error con la actualizacion de Store",
+            error: error
+        })
+
+    }
+
+}
+exports.delete = async (req, res) => {
+
+    const { id } = req. params
+
+    try {
+        const deletedStore = await Store. findByIdAndRemove({_id:id})
+
+        res.json({
+            msg: "Store borrado con exito"
+        })
+
+
+    } catch ( error ) {
+        res.status(500).json({
+            msg: "Hubo un error borrando el store",
+            error:error
+        })
+        
+    }
+}
